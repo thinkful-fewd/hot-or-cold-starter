@@ -1,5 +1,8 @@
+// Start Anonymous Function
+(function() {
 
-$(document).ready(function(){
+// Start Document Ready jQuery
+$(function(){
 	
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
@@ -14,4 +17,4 @@ $(document).ready(function(){
 
 });
 
-
+})();
