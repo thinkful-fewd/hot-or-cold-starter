@@ -33,11 +33,32 @@ $(document).ready(function(){
 		// Clear ul#guessList
 		$('#guessList').children().remove();
 
-		var
-			guess,
-			hint;
+		//Clear #guessButton
+		$('#guessButton').val('Guess').attr('disabled', false);
+
+		var guess;
+		var hint;
+
+		/* Redundant guess check attempt
+		var guessIndex = 0;
+		var guessArray = [];
+		function indexInc() {
+			guessIndex++;
+		}
+		*/
 
 		function checkInput(input) {
+
+			/* Redundant guess check attempt
+			function checkRepeat(val, index, array) {
+				debug('checking repeat');
+				debug(val);
+				debug(index);
+				debug(array);
+				debug(input === val);
+				return input === val;
+			}
+			*/
 
 			// Validate guess input (numeric integer 1-100)
 			if (isNaN(input)) {
@@ -53,9 +74,20 @@ $(document).ready(function(){
 				return;
 			} else {
 				input = +input;
+
+				// guessArray[guessIndex] = input;
+				// indexInc();
+
 				var diff = guessDiff(guess);
 
 				// Absolute value ranges for feedback
+
+				/* Redundant guess check attempt
+				if (guessArray.forEach(checkRepeat)) {
+					debug('hint true');
+					hint = "You already guessed that number!";
+				} else
+				*/
 				if ( diff >= 50) {
 					hint = "Ice cold!";
 				} else if ((diff < 50) && (diff >= 30)) {
