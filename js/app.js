@@ -57,10 +57,14 @@ $(document).ready(function(){
 
 		// Name function that accepts user guess and delivers feedback
 		function guessDiff(guess) {
-			return Math.abs(guess - randomNum);
+			var absolute = Math.abs(guess - randomNum);
+			debug('guessDiff ' + absolute);
+			return absolute;
 		}
 
-		function submitEvent() {
+		function feedback(event) {
+			event.preventDefault();
+
 			guess = $('#userGuess').val();
 
 			checkInput(guess);
@@ -68,38 +72,38 @@ $(document).ready(function(){
 			var diff = guessDiff(guess);
 
 			// Absolute value ranges for feedback
-			if (diff >= 50) {
+			if ( diff >= 50) {
 				hint = "Ice cold!";
-			} else if (30 >= diff > 50) {
+			} else if ((diff < 50) && (diff >= 30)) {
 				hint = "Cold...";
-			} else if (20 >= diff > 30) {
+			} else if ((diff < 30) && (diff >= 20)) {
 				hint = "Warm...";
-			} else if (10 >= diff > 20) {
+			} else if ((diff < 20) && (diff >= 10)) {
 				hint = "Hot!";
-			} else if (1 >= diff > 10) {
+			} else if ((diff < 10) && (diff >= 1)) {
 				hint = "Very hot!!";
-			} else {
-				hint = 'undefined';
 			}
 
 			// Feedback appears in h2#feedback
 			$('#feedback').text(hint);
 
 			// Guess count feedback to appear in span#count
-			var count = $('#count').val();
-			count++;
-
-		}
-
-		$('#guessForm').on('submit', submitEvent);
+			$('#count').html(function(i, val) {
+				return +val + 1;
+			});
 
 			// Supply users with list of guesses in ul#guessList
+			$('#guessList').append('<li>'+guess+'</li>');
 
+			// Clear #userGuess
+			$('#userGuess').val('');
+		}
 
+		$('#guessForm').submit(feedback);
 	}
 
 	// Event handler for li.new
-	$('a.new').on('click', Game);
+	$('a.new').click(Game);
 
 	// Start new game
 	Game();
