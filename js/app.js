@@ -25,13 +25,13 @@ $(document).ready(function(){
 		console.log("Random Number", randomNum);
 
 		// Clear h2#feedback
-		$('#feedback').val('Make your guess!');
+		$('#feedback').text('Make your guess!');
 
 		// Clear span#count
-		$('#count').val(0);
+		$('#count').text(0);
 
 		// Clear ul#guessList
-		$('#guessList').children();
+		$('#guessList').children().remove();
 
 		var
 			guess,
