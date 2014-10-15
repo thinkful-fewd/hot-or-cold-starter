@@ -55,13 +55,11 @@ $(document).ready(function(){
 
 			input = +input;
 
-			function checkRepeat() {
-
-				guessArray.every( function(val, index, array) {
-					debug('every');
-					return input !== val;
-				});
+			function passed(val, index, array) {
+				return input !== val;
 			}
+			var noRepeats = guessArray.every(passed);
+
 
 			// Modal window alerts
 			if (isNaN(input)) {
@@ -73,9 +71,9 @@ $(document).ready(function(){
 			} else if (input < 1) {
 				debug(input);
 				$('#lessAlert').fadeIn(400);
-			} /* else if (checkRepeat() !== true) {
+			} else if (noRepeats !== true) {
 				$('#repeatAlert').fadeIn(400);
-			} */
+			}
 			// Valid input
 				else {
 
