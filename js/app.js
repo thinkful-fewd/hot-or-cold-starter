@@ -16,78 +16,75 @@ $(document).ready(function(){
 
 	// Create newGame function
 	function Game() {
+		// Generate random number w/ named function
 		this.min = 1;
 		this.max = 100;
-
-		// Generate random number w/ named function
 		var randomNum = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-
 		console.log("Random Number", randomNum);
 
-		// Clear h2#feedback
-		$('#feedback').text('Make your guess!');
-
-		// Clear span#count
-		$('#count').text(0);
-
-		// Clear ul#guessList
-		$('#guessList').children().remove();
-
-		//Clear #guessButton
-		$('#guessButton').val('Guess').attr('disabled', false);
+		// Game Reset
+		function reset() {
+			$('#feedback').text('Make your guess!');
+			$('#count').text(0);
+			$('#guessList').children().remove();
+			$('#guessButton').val('Guess').attr('disabled', false);
+		}
+		reset();
 
 		var guess;
 		var hint;
 
-		/* Redundant guess check attempt
+		// Redundant guess check attempt
 		var guessIndex = 0;
 		var guessArray = [];
 		function indexInc() {
 			guessIndex++;
 		}
-		*/
 
+
+		// Validate text input
 		function checkInput(input) {
 
-			/* Redundant guess check attempt
-			function checkRepeat(val, index, array) {
-				debug('checking repeat');
-				debug(val);
-				debug(index);
-				debug(array);
-				debug(input === val);
-				return input === val;
-			}
-			*/
+			// Redundant guess check attempt
 
-			// Validate guess input (numeric integer 1-100)
+
+			// Name function that accepts user guess and delivers feedback
+			function guessDiff(guess) {
+				return Math.abs(guess - randomNum);
+			}
+
+			input = +input;
+
+			function checkRepeat() {
+
+				guessArray.every( function(val, index, array) {
+					debug('every');
+					return input !== val;
+				});
+			}
+
+			// Modal window alerts
 			if (isNaN(input)) {
 				$('#nanAlert').fadeIn(400);
 			} else if ((input % 1) !== 0) {
 				$('#integerAlert').fadeIn(400);
-				return;
 			} else if (input > 100) {
 				$('#greatAlert').fadeIn(400);
-				return;
 			} else if (input < 1) {
+				debug(input);
 				$('#lessAlert').fadeIn(400);
-				return;
-			} else {
-				input = +input;
+			} /* else if (checkRepeat() !== true) {
+				$('#repeatAlert').fadeIn(400);
+			} */
+			// Valid input
+				else {
 
-				// guessArray[guessIndex] = input;
-				// indexInc();
-
-				var diff = guessDiff(guess);
+				// Add to guess array
+				guessArray[guessIndex] = input;
+				indexInc();
 
 				// Absolute value ranges for feedback
-
-				/* Redundant guess check attempt
-				if (guessArray.forEach(checkRepeat)) {
-					debug('hint true');
-					hint = "You already guessed that number!";
-				} else
-				*/
+				var diff = guessDiff(guess);
 				if ( diff >= 50) {
 					hint = "Ice cold!";
 				} else if ((diff < 50) && (diff >= 30)) {
@@ -103,42 +100,28 @@ $(document).ready(function(){
 					$('#guessButton').val('WINNER').attr('disabled', true);
 				}
 
-				// Feedback appears in h2#feedback
+				// Update UI
 				$('#feedback').text(hint);
-
-				// Guess count feedback to appear in span#count
 				$('#count').html(function(i, val) {
 					return +val + 1;
 				});
 
-				// Supply users with list of guesses in ul#guessList
-				$('#guessList').append("<li class='guess'>"+guess+"</li>");
-
-				// Clear #userGuess
-				$('#userGuess').val('');
+				// if () {
+				// 	return;
+				// } else {
+					$('#guessList').append("<li class='guess'>"+guess+"</li>");
+					$('#userGuess').val('');
+				// }
 			}
-		}
-
-		// Name function that accepts user guess and delivers feedback
-		function guessDiff(guess) {
-			return Math.abs(guess - randomNum);
 		}
 
 		function feedback(event) {
 			event.preventDefault();
-
 			guess = $('#userGuess').val();
-
 			checkInput(guess);
 		}
-
 		$('#guessForm').submit(feedback);
 	}
-
-	// Event handler for li.new
-	$('a.new').click(Game);
-
-	// Start new game
 	Game();
-
+	$('a.new').click(Game);
 });
