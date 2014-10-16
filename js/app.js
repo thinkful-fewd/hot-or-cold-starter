@@ -16,50 +16,54 @@ $(document).ready(function(){
 
 	// Create newGame function
 	function Game() {
+		// Reset
+		$('#feedback').text('Make your guess!');
+		$('#count').text(0);
+		$('#guessList').children().remove();
+		$('#guessButton').val('Guess').attr('disabled', false);
+
 		// Generate random number w/ named function
 		this.min = 1;
 		this.max = 100;
-		var randomNum = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+		this.randomNum = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
 		console.log("Random Number", randomNum);
 
-		// Game Reset
-		function reset() {
-			$('#feedback').text('Make your guess!');
-			$('#count').text(0);
-			$('#guessList').children().remove();
-			$('#guessButton').val('Guess').attr('disabled', false);
-		}
-		reset();
+		this.guessArray = [];
 
-		var guess;
-		var hint;
-
-		// Redundant guess check attempt
-		var guessIndex = 0;
-		var guessArray = [];
-		function indexInc() {
-			guessIndex++;
-		}
-
-
-		// Validate text input
-		function checkInput(input) {
-
-			// Redundant guess check attempt
-
-
-			// Name function that accepts user guess and delivers feedback
-			function guessDiff(guess) {
-				return Math.abs(guess - randomNum);
-			}
+		// Name function that accepts user guess and delivers feedback
+		this.checkGuess = function(input) {
 
 			input = +input;
 
-			function passed(val, index, array) {
-				return input !== val;
-			}
-			var noRepeats = guessArray.every(passed);
+			this.validInput = function() {
+				guessArray.push(input);
 
+				function diff() {
+					return Math.abs(input - randomNum);
+				}
+
+				if ( diff() >= 50) {
+					hint = "Ice cold!";
+				} else if ( (diff() < 50) && (diff() >= 30) ) {
+					hint = "Cold...";
+				} else if ( (diff() < 30) && (diff() >= 20) ) {
+					hint = "Warm...";
+				} else if ( (diff() < 20) && (diff() >= 10) ) {
+					hint = "Hot!";
+				} else if ( (diff() < 10) && (diff() >= 1) ) {
+					hint = "Very hot!!";
+				} else if ( diff() === 0) {
+					hint = 'You guessed it!';
+					$('#guessButton').val('WINNER').attr('disabled', true);
+				}
+
+				$('#feedback').text(hint);
+				$('#count').html(function(i, val) {
+					return +val + 1;
+				});
+				$('#guessList').append("<li class='guess'>"+input+"</li>");
+				$('#userGuess').val('');
+			};
 
 			// Modal window alerts
 			if (isNaN(input)) {
@@ -71,54 +75,19 @@ $(document).ready(function(){
 			} else if (input < 1) {
 				debug(input);
 				$('#lessAlert').fadeIn(400);
-			} else if (noRepeats !== true) {
+			} else if (guessArray.every( function(val, index, array) {
+				return input !== val;
+				}) !== true) {
 				$('#repeatAlert').fadeIn(400);
+			} else {
+				validInput();
 			}
-			// Valid input
-				else {
+		};
 
-				// Add to guess array
-				guessArray[guessIndex] = input;
-				indexInc();
-
-				// Absolute value ranges for feedback
-				var diff = guessDiff(guess);
-				if ( diff >= 50) {
-					hint = "Ice cold!";
-				} else if ((diff < 50) && (diff >= 30)) {
-					hint = "Cold...";
-				} else if ((diff < 30) && (diff >= 20)) {
-					hint = "Warm...";
-				} else if ((diff < 20) && (diff >= 10)) {
-					hint = "Hot!";
-				} else if ((diff < 10) && (diff >= 1)) {
-					hint = "Very hot!!";
-				} else if (diff === 0) {
-					hint = 'You guessed it!';
-					$('#guessButton').val('WINNER').attr('disabled', true);
-				}
-
-				// Update UI
-				$('#feedback').text(hint);
-				$('#count').html(function(i, val) {
-					return +val + 1;
-				});
-
-				// if () {
-				// 	return;
-				// } else {
-					$('#guessList').append("<li class='guess'>"+guess+"</li>");
-					$('#userGuess').val('');
-				// }
-			}
-		}
-
-		function feedback(event) {
+		$('#guessForm').submit(function(event) {
 			event.preventDefault();
-			guess = $('#userGuess').val();
-			checkInput(guess);
-		}
-		$('#guessForm').submit(feedback);
+			checkGuess($('#userGuess').val());
+		});
 	}
 	Game();
 	$('a.new').click(Game);
