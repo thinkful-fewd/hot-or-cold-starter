@@ -12,8 +12,7 @@ $(document).ready(function(){
   	});
   	
   	/*--- Variable Declaration---*/
-  
-  	var numberRandom;
+   	var numberRandom;
   	var numberGuess;
   	var numberCheck;
   	var counter = 0;
@@ -28,13 +27,11 @@ $(document).ready(function(){
   	};
 
   	/*--- Append Function---*/
-
   	function appendGuess(){
   		$('#guessList').append('<li>'+ numberGuess +'</li>');
   	}
 
   	/*--- New Game Function---*/
-
   	function newGame(){
   		playTrumpet();
   		$('#count').text(0);
@@ -69,7 +66,6 @@ $(document).ready(function(){
 	}
 
 	/*--- User Input Compare Function---*/
-
 	function checkShowGuess(){
 					
 					console.log (numberRandom);
