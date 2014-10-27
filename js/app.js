@@ -16,6 +16,7 @@ $(document).ready(function(){
     guessFlagged = true;
     $('#guessList').empty();
     countDisplay(guessCount);
+    setFeedack('Make your Guess!');
   };
 
   /*--- Get value on form submit ---*/
@@ -35,7 +36,7 @@ $(document).ready(function(){
         guessFlagged = checkUserGuess(Math.abs(randomNumber - userChoice))
       };
     } else {
-      $('#feedback').text('You already guessed the number!');
+      setFeedack('You already guessed the number!');
     };
   });
 
@@ -64,20 +65,20 @@ $(document).ready(function(){
   function checkUserGuess(difference) {
     difference = Math.abs(difference);
     if (difference == 0) {
-      $('#feedback').text('You guessed it!');
+      setFeedack('You guessed it!');
       numberGuessed = true;
       return false;
     } else if (difference <= 5){
-      $('#feedback').text('You are getting hot!');
+      setFeedack('You are getting hot!');
       return true;
     } else if (difference > 5 && difference <= 15) {
-      $('#feedback').text('You are getting warmer...');
+      setFeedack('You are getting warmer...');
       return true;
     } else if (difference > 15 && difference <= 30) {
-      $('#feedback').text('You are cold.');
+      setFeedack('You are cold.');
       return true;  
     } else {
-      $('#feedback').text('You are freezing cold');
+      setFeedack('You are freezing cold');
     };
   }
 
@@ -95,6 +96,10 @@ $(document).ready(function(){
   function shiftFocus(){
     $('#userGuess').focus();
   };
+
+  function setFeedack(userFeedback) {
+    $('#feedback').text(userFeedback);
+  }
 
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
