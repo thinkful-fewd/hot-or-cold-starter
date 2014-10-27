@@ -51,10 +51,13 @@ $(document).ready(function(){
   /*--- Check that inut is a valid choice ---*/
   function checkUserInput(input) {
     if (isNaN(input)){
-      console.log('You must enter a number');
+      setFeedack('Sorry, I only understand whole integers.');
+      return true;
+    } else if (input % 1 != 0) {
+      setFeedack("Decimals. We don't need no stinking decimals!");
       return true;
     } else if (input < 1 || input > 100) {
-      console.log('Number must be between 1 and 100');
+      setFeedack('Your guess needs to be from 1 to 100.');
       return true;
     } else {
       return false;
@@ -67,16 +70,12 @@ $(document).ready(function(){
     if (difference == 0) {
       setFeedack('You guessed it!');
       numberGuessed = true;
-      return false;
     } else if (difference <= 5){
       setFeedack('You are getting hot!');
-      return true;
     } else if (difference > 5 && difference <= 15) {
       setFeedack('You are getting warmer...');
-      return true;
     } else if (difference > 15 && difference <= 30) {
       setFeedack('You are cold.');
-      return true;  
     } else {
       setFeedack('You are freezing cold');
     };
