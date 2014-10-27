@@ -3,6 +3,7 @@ $(document).ready(function(){
   var numberGuessed = false;
   var guessCount;
   var randomNumber;
+  var guessFlagged;
 
   /*--- Sets new game ---*/
   newGame();
@@ -12,6 +13,9 @@ $(document).ready(function(){
     numberGuessed = false;
     guessCount = 0;
     randomNumber = generateNumber();
+    guessFlagged = true;
+    $('#guessList').empty();
+    countDisplay(guessCount);
   };
 
   /*--- Get value on form submit ---*/
@@ -20,6 +24,18 @@ $(document).ready(function(){
     if (!numberGuessed) {
       userChoice = $('#userGuess').val();
       console.log('User guesses '+ userChoice);
+      clearGuessField();
+      shiftFocus();
+      guessFlagged = checkUserInput(userChoice);
+      if (!guessFlagged){
+        console.log('input is valid');
+        guessCount++
+        countDisplay(guessCount);
+        $('#guessList').append('<li>' + userChoice + '</li>');
+        guessFlagged = checkUserGuess(Math.abs(randomNumber - userChoice))
+      };
+    } else {
+      $('#feedback').text('You already guessed the number!');
     };
   });
 
@@ -29,6 +45,55 @@ $(document).ready(function(){
     console.log("Randon number is " + generatedNumber);
 
     return generatedNumber;
+  };
+
+  /*--- Check that inut is a valid choice ---*/
+  function checkUserInput(input) {
+    if (isNaN(input)){
+      console.log('You must enter a number');
+      return true;
+    } else if (input < 1 || input > 100) {
+      console.log('Number must be between 1 and 100');
+      return true;
+    } else {
+      return false;
+    };
+  };
+
+  /*--- Checks user guess against random number ---*/
+  function checkUserGuess(difference) {
+    difference = Math.abs(difference);
+    if (difference == 0) {
+      $('#feedback').text('You guessed it!');
+      numberGuessed = true;
+      return false;
+    } else if (difference <= 5){
+      $('#feedback').text('You are getting hot!');
+      return true;
+    } else if (difference > 5 && difference <= 15) {
+      $('#feedback').text('You are getting warmer...');
+      return true;
+    } else if (difference > 15 && difference <= 30) {
+      $('#feedback').text('You are cold.');
+      return true;  
+    } else {
+      $('#feedback').text('You are freezing cold');
+    };
+  }
+
+  /*--- Displays the number of guesses ---*/
+  function countDisplay(count){
+    $('#count').text(count);
+  }
+
+  /*--- Clear guess field after form submit ---*/
+  function clearGuessField(){
+    $('#userGuess').val('');
+  };
+
+  /*--- Return focus to guess field after submit ---*/
+  function shiftFocus(){
+    $('#userGuess').focus();
   };
 
 	/*--- Display information modal box ---*/
