@@ -26,25 +26,30 @@ e.preventDefault();
         var userGuess = $('#userGuess').val();
         $('#guessList').prepend('<li>' + userGuess + '</li>');
         if (userGuess - randomNum == 0) {
-            $('#feedback').remove();
+            $('#feedback').empty();
             $('#feedback').append('Yes! You Won!'); //replace
         }
         else if (Math.abs(userGuess - randomNum) <= 5) {
-            alert("Lava Hot!");
+            $('#feedback').empty();
+            $('#feedback').append("Lava Hot!");
         }
         else if (Math.abs(userGuess - randomNum) <= 10) {
-            alert("Hot!");
+            $('#feedback').empty();
+            $('#feedback').append("Hot!");
         }
         else if (Math.abs(userGuess - randomNum) <= 25) {
-            alert("Cold :(");
+            $('#feedback').empty();
+            $('#feedback').append("Cold :(");
         }
         else {
-            alert("Antarctica, baby!");
+            $('#feedback').empty();
+            $('#feedback').append("Antarctica, baby!");
         }
-        //return ('.text').val("");
     });
 
-    //Define hot/cold ranges & declare win feedback prints to div#feedback
+    $(document).on('click', '.new', function() {
+        document.location.reload(true);
+    });
 
 
     //Handle string and decimal inputs (parseInt) - inside previous function?
