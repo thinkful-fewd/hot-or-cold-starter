@@ -26,20 +26,22 @@ e.preventDefault();
         var userGuess = $('#userGuess').val();
         $('#guessList').prepend('<li>' + userGuess + '</li>');
         if (userGuess - randomNum == 0) {
-            alert("you won"); //replace
+            $('#feedback').remove();
+            $('#feedback').append('Yes! You Won!'); //replace
         }
-       /* else if (userGuess - randomNum >= 5) {
+        else if (Math.abs(userGuess - randomNum) <= 5) {
             alert("Lava Hot!");
         }
-        else if (userGuess - randomNum >= 10) {
+        else if (Math.abs(userGuess - randomNum) <= 10) {
             alert("Hot!");
         }
-        else if (userGuess - randomNum >= 25) {
+        else if (Math.abs(userGuess - randomNum) <= 25) {
             alert("Cold :(");
         }
-        else if (userGuess - randomNum >= 50) {
+        else {
             alert("Antarctica, baby!");
-        }*/
+        }
+        //return ('.text').val("");
     });
 
     //Define hot/cold ranges & declare win feedback prints to div#feedback
