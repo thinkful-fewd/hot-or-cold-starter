@@ -45,6 +45,13 @@ e.preventDefault();
             $('#feedback').empty();
             $('#feedback').append("Antarctica, baby!");
         }
+
+        var guessCount = parseInt($('#count').text());
+        console.log(guessCount);
+        guessCount++;
+        console.log(guessCount);
+        //$('#count').empty();
+        //$('#count').append(guessCount);
     });
 
     $(document).on('click', '.new', function() {
