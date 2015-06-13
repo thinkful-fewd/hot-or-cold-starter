@@ -19,7 +19,7 @@ e.preventDefault();
     });
     //Choose random number 1-100 newGame function
     var randomNum = Math.floor((Math.random() * 100) + 1);
-    console.log(randomNum);
+
 
     //Accept guesses from input (click and Enter), log answers in ul#guessList, increment guess count
     $('#guessButton').click(function() {
@@ -47,11 +47,10 @@ e.preventDefault();
         }
 
         var guessCount = parseInt($('#count').text());
-        console.log(guessCount);
         guessCount++;
-        console.log(guessCount);
-        //$('#count').empty();
-        //$('#count').append(guessCount);
+        $('#count').empty();
+        $('#count').append(guessCount);
+        $('#userGuess').empty();
     });
 
     $(document).on('click', '.new', function() {
@@ -59,9 +58,7 @@ e.preventDefault();
     });
 
 
-    //Handle string and decimal inputs (parseInt) - inside previous function?
 
-    //Reset game
 
 
 });
