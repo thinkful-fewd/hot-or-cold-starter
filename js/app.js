@@ -50,7 +50,7 @@ e.preventDefault();
         guessCount++;
         $('#count').empty();
         $('#count').append(guessCount);
-        $('#userGuess').empty();
+        $('#userGuess').val("");
     });
 
     $(document).on('click', '.new', function() {
