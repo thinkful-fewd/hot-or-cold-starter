@@ -43,7 +43,7 @@ $(document).ready(function(){
 		$('#count').text(guessCount); //still don't understand the $ v variable name
 		$('#guessList li').remove(); // is this just to reset it to 0?
 		secretNumber = (Math.floor(Math.random()*100));
-		console.log("Secret number = " + secretNumber);
+		console.log("New secret number = " + secretNumber);
 		setFeeback("Make your guess!");	//still don't understand all these different ways of formatting what seem like the same thing
 	}
 
