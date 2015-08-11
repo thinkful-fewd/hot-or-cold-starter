@@ -18,8 +18,37 @@ $(document).ready(function(){
 
 
 	//get user input
+	$('form').submit(function(event) {
+		event.preventDefault();
+		if(!finish) {
+			userGuess = $('#userGuess').val();
+			checkInput();
+		}
+		else {
+			setFeedback("You already won! Start a new game.");
+		}
+	});
 
-	//validate user input is number between 1 and 100 
+	//validate user input 
+	function checkInput() {
+	//	if(isNaN(userGuess)) {
+	//		alert("Please enter a number from 1-100!");
+	//	}
+	//	else if(userGuess === " ") {
+	//		alert("Well...you still have to input a number");
+	//	}
+	//	else if(userGuess < 0 || >100) {
+	//		alert("The number has to be between 1 and 100");
+	//	}
+	//	else {
+	//		comparisonAmount(); //i may not need this, seems too complicated
+			console.log("User guess = " + userGuess);
+			$('#userGuess').val(''); //what is this doing? what is val?
+			guessCount++; //what is this doing? adding 1? noting number of guesses i think
+			setCount(guessCount); //really don't understand the formatting here
+			$('ul#guessList').append("<li>" + userGuess + "</li>");
+	//	}
+	} 
 
 	//evaluation user input
 
@@ -28,7 +57,10 @@ $(document).ready(function(){
 
 
 
-	//number of attempts
+	//number of attempts (this probably isn't going to work until submit/retrieving userGuess is written)
+	function setCount(count) { // not sure what (count) is doing here...? is it an established element like "remove" or did the developer define it?
+		$('#count').text(guessCount); //don't understand wen to use this format v. innerHTML = guessCount
+	}
 
 	//list of previously entered numbers
 
