@@ -3,6 +3,9 @@ $(document).ready(function(){
 
 	//variables
 	var secretNumber = 0;
+	var userGuess = 0;
+	var guessCount = 0;
+	var finish = false;
 
 
 	//random number generator
@@ -32,9 +35,23 @@ $(document).ready(function(){
 
 
 
-	//new game function
+	//new game function -- resets everything, gets a new random number
+	function newGame() {
+		guessCount = 0;
+		finish = false;
+		$('#userGuess').val(); //not sure what this is about
+		$('#count').text(guessCount); //still don't understand the $ v variable name
+		$('#guessList li').remove(); // is this just to reset it to 0?
+		secretNumber = (Math.floor(Math.random()*100));
+		console.log("Secret number = " + secretNumber);
+		setFeeback("Make your guess!");	//still don't understand all these different ways of formatting what seem like the same thing
+	}
 
-	//start new game
+
+	//start new game -- user action that calls the new game function
+	$('.new').click(function() {
+		newGame();
+	});
 
 	
 	/*--- Display information modal box ---*/
