@@ -1,14 +1,14 @@
 
 $(document).ready(function(){
 
-	//variables
+    /*--variables--*/
 	var secretNumber = 0;
 	var userGuess = 0;
 	var guessCount = 0;
 	var finish = false;
 
 
-	//random number generator
+	/*--random number generator--*/
 	function secretNumberGenerator() {
 		secretNumber = (Math.floor(Math.random()*100));
 		console.log("Secret number = " + secretNumber);
@@ -17,7 +17,7 @@ $(document).ready(function(){
 	secretNumberGenerator();
 
 
-	//get user input
+	/*--get user input--*/
 	$('form').submit(function(event) {
 		event.preventDefault();
 		if(!finish) {
@@ -29,7 +29,7 @@ $(document).ready(function(){
 		}
 	});
 
-	//validate user input 
+	/*--validate user input--*/
 	function checkInput() {
 	//	if(isNaN(userGuess)) {
 	//		alert("Please enter a number from 1-100!");
@@ -50,24 +50,27 @@ $(document).ready(function(){
 	//	}
 	} 
 
-	//evaluation user input
-
-	//feedback to user
+	/*--evaluation user input, he used three functions: negativeAmount, positiveAmount and comparisonAmount--*/
 
 
 
 
-	//number of attempts (this probably isn't going to work until submit/retrieving userGuess is written)
+	/*--feedback to user--*/
+	function setFeedback(feedback) { //what does (feedback) mean here?
+		$("#feedback").text(feedback);
+	}
+
+
+
+
+	/*--number of attempts--*/
 	function setCount(count) { // not sure what (count) is doing here...? is it an established element like "remove" or did the developer define it?
 		$('#count').text(guessCount); //don't understand wen to use this format v. innerHTML = guessCount
 	}
-
-	//list of previously entered numbers
-
+	/*--list of previously entered numbers (this is handled by checkInput function currently--*/
 
 
-
-	//new game function -- resets everything, gets a new random number
+	/*--new game function--*/
 	function newGame() {
 		guessCount = 0;
 		finish = false;
@@ -76,11 +79,9 @@ $(document).ready(function(){
 		$('#guessList li').remove(); // is this just to reset it to 0?
 		secretNumber = (Math.floor(Math.random()*100));
 		console.log("New secret number = " + secretNumber);
-		setFeeback("Make your guess!");	//still don't understand all these different ways of formatting what seem like the same thing
+		setFeedback("Make your guess!");	//still don't understand all these different ways of formatting what seem like the same thing
 	}
-
-
-	//start new game -- user action that calls the new game function
+	/*--start new game, calls the function and runs it--*/
 	$('.new').click(function() {
 		newGame();
 	});
@@ -89,10 +90,9 @@ $(document).ready(function(){
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
     	$(".overlay").fadeIn(1000);
-
   	});
   	/*--- Hide information modal box ---*/
-  	$("a.close").click(function(){
+  	$(".close").click(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
