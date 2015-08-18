@@ -27,6 +27,13 @@ $('.new').click(function() {
 	newGame();
 });
 
-
+/*--MODAL--*/
+/*--open modal--*/
+$('.what').click(function() {
+	$('.overlay').fadeIn(1000);
+});
+$('.close').click(function() {
+	$('.overlay').fadeOut(1000);
+});
 
 });
