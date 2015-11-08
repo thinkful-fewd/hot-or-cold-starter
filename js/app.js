@@ -1,6 +1,5 @@
-
 $(document).ready(function(){
-	
+
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
     	$(".overlay").fadeIn(1000);
@@ -13,5 +12,3 @@ $(document).ready(function(){
   	});
 
 });
-
-
